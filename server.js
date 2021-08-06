@@ -8,6 +8,16 @@ const PORT = process.env.PORT || 4001;
 
 app.use(express.static('public'));
 
+ // Get all quotes
+ app.get('/api/quotes', (req, res, next) => {
+    if(!req.query.hasOwnProperty('person')){
+        res.send({quotes: quotes})
+    } else {
+        const filterQuote = quotes.filter(element => element.person.toLocaleLowerCase() === req.query.person.toLocaleLowerCase());
+        res.send({quotes: filterQuote});
+    }
+})
+
 // Get a random quote
 app.get('/api/quotes/random', (req, res, next) => {
     const quote = getRandomElement(quotes);
@@ -20,17 +30,6 @@ app.get('/api/quotes/:id', (req, res, next) => {
         res.status(200).send(quotes[req.params.id]);
     }
  })
-
- // Get all quotes
-app.get('/api/quotes', (req, res, next) => {
-    if(!req.query.hasOwnProperty('person')){
-        res.send({quote: quotes})
-    } else {
-        const filterQuote = quotes.filter(element => element.person === req.query.person);
-        res.send({quotes: filterQuote});
-    }
-})
-
 
 // Create a quote object
 app.post('/api/quotes', (req, res, next) => {
