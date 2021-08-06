@@ -16,20 +16,20 @@ app.use(express.static('public'));
         const filterQuote = quotes.filter(element => element.person.toLocaleLowerCase() === req.query.person.toLocaleLowerCase());
         res.send({quotes: filterQuote});
     }
-})
+});
 
 // Get a random quote
 app.get('/api/quotes/random', (req, res, next) => {
     const quote = getRandomElement(quotes);
     res.send({quote: quote})
-})
+});
 
 // Get one quote
 app.get('/api/quotes/:id', (req, res, next) => {
     if(quotes[req.params.id]){
         res.status(200).send(quotes[req.params.id]);
     }
- })
+ });
 
 // Create a quote object
 app.post('/api/quotes', (req, res, next) => {
@@ -41,7 +41,7 @@ app.post('/api/quotes', (req, res, next) => {
     else {
         res.status(400).send()
     }
-})
+});
 
 // Update one quote
 app.put('/api/quotes/:id', (req, res, next) => {
@@ -53,7 +53,7 @@ app.put('/api/quotes/:id', (req, res, next) => {
     else {
         res.status(404).send()
     }
-}) 
+});
 
 // Delete one quote
 app.delete('/api/quotes/:id', (req, res, next) => {
@@ -63,7 +63,7 @@ app.delete('/api/quotes/:id', (req, res, next) => {
     } else {
         res.status(404).send();
     }
-})
+});
 
 
 app.listen(PORT, () => {
